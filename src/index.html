@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambio de Divisas Software</title>
+    <link href="./output.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://images.pexels.com/photos/3483098/pexels-photo-3483098.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-80">
+        <h1 class="text-2xl font-bold mb-4 text-center">Casa de Divisas</h1>
+        <div class="mb-4">
+            <label for="amount" class="block text-sm font-medium text-gray-700">Monto</label>
+            <input id="amount" type="number" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <div class="mb-4">
+            <label for="from-currency" class="block text-sm font-medium text-gray-700">Divisa de Origen</label>
+            <select id="from-currency" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <option value="usd">Dólares</option>
+                <option value="cop">Pesos Colombianos</option>
+                <option value="ves">Bolívares</option>
+                <option value="pen">Soles</option>
+                <option value="clp">Pesos Chilenos</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="to-currency" class="block text-sm font-medium text-gray-700">Divisa de Destino</label>
+            <select id="to-currency" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <option value="cop">Pesos Colombianos</option>
+                <option value="usd">Dólares</option>
+                <option value="ves">Bolívares</option>
+                <option value="pen">Soles</option>
+                <option value="clp">Pesos Chilenos</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="result" class="block text-sm font-medium text-gray-700">Resultado</label>
+            <input id="result" type="te" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" readonly>
+        </div>
+        <button id="convert-btn" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Cambiar</button>
+    </div>
+
+  <!-- Modal de advertencia -->
+  <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
+      <h2 class="text-xl font-bold text-blue-500 mb-4">Advertencia</h2>
+      <p class="text-gray-700 mb-6">No puedes poner la misma divisa en los dos valores.</p>
+      <button id="closeModal" class="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cerrar</button>
+    </div>
+  </div>
+<script src="../app.js"></script>
+</body>
+</html>
