@@ -5,123 +5,40 @@ const fromCurrencyInput = document.getElementById('from-currency');
 const toCurrencyInput = document.getElementById('to-currency');
 const result = document.getElementById('result');
 const closeModalButton = document.getElementById('closeModal');
+const modal = document.getElementById('modal'); // Asegúrate de tener esta referencia
+
+// Factores de conversión
+const conversionRates = {
+  cop: { usd: 4127.04, ves: 105, pen: 0.0009097, clp: 0.2214 },
+  ves: { usd: 36.62, cop: 95, pen: 0.1041, clp: 25.9788 },
+  pen: { cop: 1112.3803, usd: 0.2641, ves: 9.6917, clp: 246.9145 },
+  usd: { clp: 901.50, cop: 4127.04, ves: 36.62, pen: 3.79 },
+  clp: { usd: 0.0011, cop: 4.52, ves: 0.038, pen: 0.004 }
+};
 
 function conversion() {
-    // Si las divisas son iguales
-    if (fromCurrencyInput.value === toCurrencyInput.value) {
-        modal.classList.remove('hidden');  // Mostrar el modal
+    const from = fromCurrencyInput.value;
+    const to = toCurrencyInput.value;
+    const amount = parseFloat(amountInput.value);
+
+    // Si las divisas son iguales, mostrar modal y salir
+    if (from === to) {
+        modal.classList.remove('hidden');
         return;
     }
-    
-    // Peso a Dólar
-    if (fromCurrencyInput.value === 'cop' && toCurrencyInput.value === 'usd') {
-        result.value = (amountInput.value / 4127.04).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-    
-    // Peso a Bolívar
-    if (fromCurrencyInput.value === 'cop' && toCurrencyInput.value === 'ves') {
-        result.value = Math.round(amountInput.value / 105) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
 
-    // Peso a sol
-    if (fromCurrencyInput.value === 'cop' && toCurrencyInput.value === 'pen') {
-        result.value = (amountInput.value * 0.0009097).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
+    // Obtener la tasa de conversión
+    const rate = conversionRates[from]?.[to];
+    if (rate) {
+        result.value = (amount * rate).toFixed(2) + ' ' + to.toUpperCase();
+    } else {
+        result.value = 'Conversión no disponible';
     }
-
-    // Peso colombiano a peso chileno
-    if (fromCurrencyInput.value === 'cop' && toCurrencyInput.value === 'clp') {
-        result.value = (amountInput.value * 0.2214).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Bolívar a Dólar
-    if (fromCurrencyInput.value === 'ves' && toCurrencyInput.value === 'usd') {
-        result.value = (amountInput.value / 36.62).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Bolívar a Pesos Colombianos
-    if (fromCurrencyInput.value === 'ves' && toCurrencyInput.value === 'cop') {
-        result.value = (amountInput.value * 95).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Bolívar a Soles
-    if (fromCurrencyInput.value === 'ves' && toCurrencyInput.value === 'pen') {
-        result.value = (amountInput.value * 0.1041).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Bolívar a Pesos Chilenos
-    if (fromCurrencyInput.value === 'ves' && toCurrencyInput.value === 'clp') {
-        result.value = (amountInput.value * 25.9788).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Soles a Pesos Colombianos
-    if (fromCurrencyInput.value === 'pen' && toCurrencyInput.value === 'cop') {
-        result.value = (amountInput.value * 1112.3803).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Soles a Dólares
-    if (fromCurrencyInput.value === 'pen' && toCurrencyInput.value === 'usd') {
-        result.value = (amountInput.value * 0.2641).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Soles a Bolívares
-    if (fromCurrencyInput.value === 'pen' && toCurrencyInput.value === 'ves') {
-        result.value = (amountInput.value * 9.6917).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Soles a Pesos Chilenos
-    if (fromCurrencyInput.value === 'pen' && toCurrencyInput.value === 'clp') {
-        result.value = (amountInput.value * 246.9145).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Dólar a Pesos Chilenos
-    if (fromCurrencyInput.value === 'usd' && toCurrencyInput.value === 'clp') {
-        result.value = (amountInput.value * 901.50).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Pesos Chilenos a Dólares
-    if (fromCurrencyInput.value === 'clp' && toCurrencyInput.value === 'usd') {
-        result.value = (amountInput.value * 0.0011).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Pesos Chilenos a Pesos Colombianos
-    if (fromCurrencyInput.value === 'clp' && toCurrencyInput.value === 'cop') {
-        result.value = (amountInput.value * 4.52).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Pesos Chilenos a Bolívares
-    if (fromCurrencyInput.value === 'clp' && toCurrencyInput.value === 'ves') {
-        result.value = (amountInput.value * 0.038).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Pesos Chilenos a Soles
-    if (fromCurrencyInput.value === 'clp' && toCurrencyInput.value === 'pen') {
-        result.value = (amountInput.value * 0.004).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-    // Dólar a Peso chileno
-    if (fromCurrencyInput.value === 'usd' && toCurrencyInput.value === 'clp') {
-        result.value = (amountInput.value * 901.50).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Dólar a Peso colombiano
-    if (fromCurrencyInput.value === 'usd' && toCurrencyInput.value === 'cop') {
-        result.value = (amountInput.value * 4127.04).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Dólar a Bolívar
-    if (fromCurrencyInput.value === 'usd' && toCurrencyInput.value === 'ves') {
-        result.value = (amountInput.value * 36.62).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-
-    // Dólar a Sol
-    if (fromCurrencyInput.value === 'usd' && toCurrencyInput.value === 'pen') {
-        result.value = (amountInput.value * 3.79).toFixed(2) + ' ' + toCurrencyInput.value.toUpperCase();
-    }
-    
 }
 
 // Asignar la función al evento click del botón
 btn.addEventListener('click', conversion);
 
 closeModalButton.addEventListener('click', () => {
-    modal.classList.add('hidden');  // Ocultar el modal
+    modal.classList.add('hidden'); // Ocultar el modal
 });
